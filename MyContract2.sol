@@ -1,5 +1,5 @@
-pragma solidity ^0.5.11;
+pragma solidity ^0.8.1;
 
 contract MyContract2 {
-    string public myString = "Hello worlds";
+    string public myString = "Hello world again";
 }
