@@ -2,19 +2,17 @@
 
 pragma solidity ^0.8.1;
 
-// Every smart contract is deployed with its own address in the ledger
 contract SendMoneyExample {
 
   uint public balanceReceived;
   uint public balanceWithdrew;
 
-  function receiveMoney() public payable { // payable -> compiler knows this function is going to rcv moeny
+  function receiveMoney() public payable {
     balanceReceived += msg.value;
-    // se output in console
   }
 
-  function withdrawMoney() public {// without it money is locked in the smart contract :)
-    address payable to = payable(msg.sender); // address of person who called this smart contract
+  function withdrawMoney() public {
+    address payable to = payable(msg.sender);
     uint balance = this.getBalance();
 
     to.transfer(balance);

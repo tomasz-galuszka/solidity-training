@@ -16,6 +16,11 @@ strings are expensive in terms of gas, try avoid
 - .send() similar to transfer but return boolean false in case on exception
 - .call.gas().value()() - transfer gas ??
 
+# Smart contract
+- every smart contract is deployed with its own address in the ledger
+- function withdrawMoney() public {// without it money is locked in the smart contract :)
+- address payable to = payable(msg.sender); // address of person who called this smart contract
+
 # Functions
 - when is payable it can receive money
 - view functions -> read only
