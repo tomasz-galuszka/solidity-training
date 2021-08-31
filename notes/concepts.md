@@ -9,12 +9,6 @@
 EOA -> externally owned accounts (by user)
 CA -> contract account (smart contract address)
 
-# Address -> can transfer ether
-- .balance: wei
-- .transfer(amount: wei)
-- .send() similar to transfer but return boolean false in case on exception
-- .call.gas().value()() - transfer gas ??
-
 # Smart contract
 - can be only triggered from externally owned account
 - cannot be triggered from another smart contract
