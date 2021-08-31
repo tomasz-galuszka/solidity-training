@@ -23,7 +23,7 @@ contract StartStopUpdateExample {
   function withdrawAllMoney(address payable _to) public {
     // if not working in solidity, instead it has require
     // if false will stop the current transaction and will trigger exception
-    // transactions are atomic, so when require triggers exception transaciton is rollec back =>  no effect in blockchain
+    // transactions are atomic, so when require triggers exception transaction is rolled back =>  no effect in blockchain
     require(msg.sender == owner, "Only the contract owner is permitted to trigger this operation");
     require(!paused, "Contract has been paused by the owner");
     _to.transfer(address(this).balance);
