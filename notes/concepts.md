@@ -18,4 +18,12 @@ CA -> contract account (smart contract address)
 - all information is public (ether is stored in the blockchain)
 - wallets only store a private key
 
-
+# Solidity 
+## view/pure functions - are free => only call to single node/ don't need mining
+## write functions - costs gas => call to blockchain network
+## receive ether
+- cannot completely avoid receive ether in a smart contract (no payable functions, no external function etc), cases:
+  1. self-destruct another SMC, and your SMC address set as beneficiary
+  2. miner reward address is set to SMC
+  3. send ETH to another SMC before it is deployed(it will already have ether when it will be deployed)
+  ** try not to match blanace from storage variable with total balance from SMC --> can go wrong :(

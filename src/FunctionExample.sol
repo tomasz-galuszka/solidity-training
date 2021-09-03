@@ -67,6 +67,7 @@ contract FunctionExample {
   // external - fallback function
   // payable - receive money
   fallback () external payable {
+    require(msg.data.length == 0, "unintentional call to fallback function, check the function name u specified."); // prevent call by using wrong function name
     receiveMoney();
   }
 

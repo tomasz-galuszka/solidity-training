@@ -10,6 +10,10 @@ public - auto generate getter function
 any reference types(aka string) - you need to define memory storage (// memory -> store in memory not in storage variable)
 strings are expensive in terms of gas, try avoid
 
+# Constructor
+- public or internal only
+- called only once during contract deployment
+
 # Input validation
 - use require (return remaining gas)
 
@@ -49,7 +53,25 @@ strings are expensive in terms of gas, try avoid
 
 # Functions
 - when is payable it can receive money
-- view functions -> read only
+- view functions -> read only (old: constant)
+- pure function -> not reading or modifying state (old: constant)
+- fallback
+  - can only be external
+  - send ether without interacting with any function
+  - called by default when no function name provided/or not found
+- visibility:
+  - public
+    - outside from smart contract
+    - within smart contract
+    - any contract extending this smart contract
+  - private
+    - within smart contract only
+  - external
+    - other contracts
+    - externally
+  - internal
+    - within smart contract
+    - derived contracts
 
 # Global objects
 - message
