@@ -16,5 +16,6 @@ CA -> contract account (smart contract address)
 
 # Public ledger
 - all information is public (ether is stored in the blockchain)
+- wallets only store a private key
 
 

@@ -24,3 +24,4 @@ https://etherscan.io/
 https://remix.ethereum.org/
 https://www.rinkeby.io/#faucet
 https://github.com/ConsenSys/Tokens
+https://fravoll.github.io/solidity-patterns/

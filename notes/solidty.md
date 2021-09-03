@@ -10,6 +10,26 @@ public - auto generate getter function
 any reference types(aka string) - you need to define memory storage (// memory -> store in memory not in storage variable)
 strings are expensive in terms of gas, try avoid
 
+# Mappings
+- key value structure
+- key can be any built in type
+- value can be any type, also another mapping
+- all values are initialized by default
+- mapping doesn't have length, need to be stored as a separate variable
+
+# Struct
+- custom types, like classes
+- values initialized to default values
+- less gas consumption comparing to two contracts in the same file
+
+# Arrays
+- fixed or dynamic length
+- length and push functions
+- mappings preferred than arrays, because of gas consumption
+
+# Enums
+- internally mapped to uint8 or uint16 based on enum size
+
 # Address -> can transfer ether
 - .balance: wei
 - .transfer(amount: wei)
