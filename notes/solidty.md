@@ -10,6 +10,12 @@ public - auto generate getter function
 any reference types(aka string) - you need to define memory storage (// memory -> store in memory not in storage variable)
 strings are expensive in terms of gas, try avoid
 
+# Input validation
+- use require (return remaining gas)
+
+# Internal state validation (invariants)
+- use assert
+
 # Mappings
 - key value structure
 - key can be any built in type
@@ -50,3 +56,16 @@ strings are expensive in terms of gas, try avoid
   .sender
   .value
   .now - current timestamp
+
+# Exceptions
+- require, assert, revert
+- cascade
+  - in high level functions, and also when occurred when sending money into another smart contract the whole transaction is reverted
+- not cascade
+  - low level functions (address.send, address.call, address.delegatecall, address.staticcall)
+- no catching mechanism in solidity
+- revert, require accept string as a message
+- gas consumption:
+  - assert consume all gas
+  - require/revert return remaining gas (wasn't used)
+  - revert -> like require with false but needs if condition, preferred way is to just use require instead
