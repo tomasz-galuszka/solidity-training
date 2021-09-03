@@ -79,6 +79,9 @@ strings are expensive in terms of gas, try avoid
   .value
   .now - current timestamp
 
+# Modifiers
+- nice way for validation / check step
+
 # Exceptions
 - require, assert, revert
 - cascade
@@ -91,3 +94,11 @@ strings are expensive in terms of gas, try avoid
   - assert consume all gas
   - require/revert return remaining gas (wasn't used)
   - revert -> like require with false but needs if condition, preferred way is to just use require instead
+
+# Inheritance
+  - is
+  - multilevel
+    - the last one is the one which will be finally used (if the same fn name)
+    - super keyword supported
+  - finally, deployed is only the single contract
+  - 
