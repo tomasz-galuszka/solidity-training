@@ -72,6 +72,10 @@ strings are expensive in terms of gas, try avoid
   - internal
     - within smart contract
     - derived contracts
+- write function cannot return values on real blockchain (only Javascript VM)
+
+# Events
+
 
 # Global objects
 - message
@@ -101,4 +105,3 @@ strings are expensive in terms of gas, try avoid
     - the last one is the one which will be finally used (if the same fn name)
     - super keyword supported
   - finally, deployed is only the single contract
-  - 
