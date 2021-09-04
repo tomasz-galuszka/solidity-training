@@ -20,8 +20,10 @@
 - etc.
 
 ### Links
-https://etherscan.io/
-https://remix.ethereum.org/
-https://www.rinkeby.io/#faucet
-https://github.com/ConsenSys/Tokens
-https://fravoll.github.io/solidity-patterns/
+- https://etherscan.io/
+- https://remix.ethereum.org/
+- https://www.rinkeby.io/#faucet
+- https://github.com/ConsenSys/Tokens
+- https://fravoll.github.io/solidity-patterns/
+- https://ethereum.github.io/yellowpaper/paper.pdf
+  https://github.com/OpenZeppelin/openzeppelin-contracts

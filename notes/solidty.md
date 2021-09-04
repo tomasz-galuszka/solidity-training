@@ -111,3 +111,7 @@ strings are expensive in terms of gas, try avoid
     - the last one is the one which will be finally used (if the same fn name)
     - super keyword supported
   - finally, deployed is only the single contract
+
+# ABI - Application Binary interface
+- describes function in a smart contract
+- 
