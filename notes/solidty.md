@@ -75,7 +75,13 @@ strings are expensive in terms of gas, try avoid
 - write function cannot return values on real blockchain (only Javascript VM)
 
 # Events
-
+ - use instead for "return" from transactions
+ - used externally to trigger functionality
+ - used as a cheap data storage  comparing to strings
+ - up to 3 parameters
+ - external apps can listen to events via RPC Ethereum interface/client (but not in smart contract itself)
+ - events are inheritable
+ - generally are cheap
 
 # Global objects
 - message

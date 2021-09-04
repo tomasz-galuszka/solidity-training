@@ -13,6 +13,10 @@ CA -> contract account (smart contract address)
 - can be only triggered from externally owned account
 - cannot be triggered from another smart contract
 - when triggered from external account can trigger another smart contract, but not async/only in single transaction
+- storage is extremely expensive (~1MB 44k USD), couple solutions:
+  - store data off-chain and store only a proof (hash) -> Notary
+  - store data in another blockchain such as IPFS
+  - store data in Event logs if not necessary 
 
 # Public ledger
 - all information is public (ether is stored in the blockchain)
