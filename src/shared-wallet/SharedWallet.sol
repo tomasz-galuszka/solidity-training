@@ -9,6 +9,7 @@ contract SharedWallet {
   address public owner;
 
   event ParticipantAllowanceChanged(address indexed _owner, address indexed _participant, uint256 _oldAllowance, uint256 _newAllowance);
+  event BalanceChanged(uint256 _oldBalance, uint256 _newBalance);
 
   constructor() {
     owner = payable(msg.sender);
@@ -36,6 +37,8 @@ contract SharedWallet {
 
     assert(balance + amount > balance);
     balance += amount;
+
+    emit BalanceChanged(balance - amount, balance);
   }
 
   function addParticipant(address _participant, uint256 _maxAllowance) public ownerOnly {
@@ -60,6 +63,8 @@ contract SharedWallet {
 
     // interact
     payable(owner).transfer(_amount);
+
+    emit BalanceChanged(balance + _amount, balance);
   }
 
   function withdrawLimited(uint256 _amount) public participantOnly {
@@ -82,6 +87,7 @@ contract SharedWallet {
     payable(msg.sender).transfer(_amount);
 
     emit ParticipantAllowanceChanged(owner, msg.sender, maxAllowance, addressAllowance[msg.sender]);
+    emit BalanceChanged(balance + _amount, balance);
   }
 
 }
