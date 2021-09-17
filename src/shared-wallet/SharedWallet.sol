@@ -8,6 +8,8 @@ contract SharedWallet {
   mapping(address => uint256) public addressAllowance;
   address public owner;
 
+  event ParticipantAllowanceChanged(address indexed _owner, address indexed _participant, uint256 _oldAllowance, uint256 _newAllowance);
+
   constructor() {
     owner = payable(msg.sender);
   }
@@ -42,11 +44,13 @@ contract SharedWallet {
     require(_participant != owner, "participant cannot be the owner itself");
 
     // effect
+    uint256 oldAllowance = addressAllowance[_participant];
     addressAllowance[_participant] = _maxAllowance;
+
+    emit ParticipantAllowanceChanged(owner, _participant, oldAllowance, addressAllowance[_participant]);
   }
 
   function withdraw(uint256 _amount) public ownerOnly {
-    // check is owner
     require(_amount > 0, "amount must be greater than zero");
     require(_amount <= balance, "not enough funds in wallet");
     assert(balance - _amount >= 0);
@@ -76,6 +80,8 @@ contract SharedWallet {
 
     // interact
     payable(msg.sender).transfer(_amount);
+
+    emit ParticipantAllowanceChanged(owner, msg.sender, maxAllowance, addressAllowance[msg.sender]);
   }
 
 }
