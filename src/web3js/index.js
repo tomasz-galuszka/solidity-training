@@ -1,36 +1,36 @@
 const Web3 = require('web3');
 
 const BLOCKCHAIN_ADDRESS = "http://localhost:7545";
-const ADDRESS_1 = "0x52A9d91ec30119F170690b7bD333188fE7838C0B";
-const ADDRESS_2 = "0xB9D5296c01993F282929879442322E58c77DD7A2";
-const CONTRACT_ADDRESS = "0x3471F438892d0B4520E8e5670e0e795b5e8D6A96";
+const ADDRESS_1 = "0x9f16344A2a9376090910546a9e7218f14c765afc";
+const ADDRESS_2 = "0x843D830d33b047766f2665eb9741dd781B30e54F";
+const CONTRACT_ADDRESS = "0xcbB349eA1458855bf8f2123e247DEFDf5D2DD8fF";
 const CONTRACT_ABI = [
-  {
-    "inputs": [],
-    "name": "myUint",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_myUint",
-        "type": "uint256"
-      }
-    ],
-    "name": "setUitn",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  }
+	{
+		"inputs": [],
+		"name": "myUint",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_myUint",
+				"type": "uint256"
+			}
+		],
+		"name": "setUitn",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
 ];
 
 const web3 = new Web3(new Web3.providers.HttpProvider(BLOCKCHAIN_ADDRESS));
@@ -39,9 +39,7 @@ const myContract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
 const getBalance = (address) => {
   web3.eth.getBalance(address)
     .then(amount => web3.utils.fromWei(amount, 'ether'))
-    .then(amount => {
-      console.log(`Balance for ${address} =  ${amount} ETH`);
-    });
+    .then(amount => console.log(`Balance for ${address} =  ${amount} ETH`));
 }
 
 const sendEther = (from, to, amount) => {
@@ -68,6 +66,7 @@ web3.eth.call({
 myContract.methods.myUint()
   .call()
   .then(console.log);
+
 myContract.methods.setUitn(20)
   .send({
     from: ADDRESS_1
