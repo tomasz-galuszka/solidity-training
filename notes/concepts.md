@@ -46,3 +46,7 @@ CA -> contract account (smart contract address)
 - detached from Ether 
 - more gwei per 1gas yu setup in real network the more yu pay => faster transaction is mined
 - avoid loops, especially when unknow iterations => costs a lot of gas
+
+# Blockchain node
+- speaks with other notes using Ethereum protocol
+- exposes 3 apis(rest/rpc, ipc/inter process communication, websocket)
