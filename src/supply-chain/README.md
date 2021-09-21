@@ -5,7 +5,7 @@
 - event is triggered when item is paid
 - item is dispatched to customer by warehouse
 
-Technicall:
+Technical:
 - truffle
 - solidity
 - react
