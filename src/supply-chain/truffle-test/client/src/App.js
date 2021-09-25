@@ -1,73 +1,82 @@
 import React, { Component } from "react";
-import SimpleStorageContract from "./contracts/SimpleStorage.json";
+import ProductManagerContract from "./contracts/ProductManager.json";
+import ItemContract from "./contracts/Item.json";
 import getWeb3 from "./getWeb3";
 
 import "./App.css";
 
 class App extends Component {
 
-  state = { storageValue: 0, web3: null, accounts: null, contract: null };
+  web3 = null;
+  accounts = [];
+  productManagerContract = null;
+  itemContract = null;
+  state = { loaded: false, products: null, index: null, addProduct: {}};
 
   componentDidMount = async () => {
     try {
-      // Get network provider and web3 instance.
-      const web3 = await getWeb3();
+      this.web3 = await getWeb3();
+      this.accounts = await this.web3.eth.getAccounts();
 
-      // Use web3 to get the user's accounts.
-      const accounts = await web3.eth.getAccounts();
-      console.log(`Accounts: ${accounts}`)
+      const networkId = await this.web3.eth.net.getId();
+      const deployedNetwork = ProductManagerContract.networks[networkId];
 
-      // Get the contract instance.
-      const networkId = await web3.eth.net.getId();
-      console.log(`networkId: ${networkId}`)
-      const deployedNetwork = SimpleStorageContract.networks[networkId];
-      const instance = new web3.eth.Contract(
-        SimpleStorageContract.abi,
+      this.productManagerContract = new this.web3.eth.Contract(
+        ProductManagerContract.abi,
+        deployedNetwork && deployedNetwork.address,
+      );
+      this.itemContract = new this.web3.eth.Contract(
+        ItemContract.abi,
         deployedNetwork && deployedNetwork.address,
       );
 
-      // Set web3, accounts, and contract to the state, and then proceed with an
-      // example of interacting with the contract's methods.
-      this.setState({ web3, accounts, contract: instance }, this.runExample);
+      this.setState({loaded: true});
+
     } catch (error) {
-      // Catch any errors for any of the above operations.
-      alert(
-        `Failed to load web3, accounts, or contract. Check console for details.`,
-      );
+      // alert(`Failed to load web3, accounts, or contract. Check console for details.`);
       console.error(error);
     }
   };
 
-  runExample = async () => {
-    const { accounts, contract } = this.state;
+  handleCreate = async () => {
+    console.log('Adding new product', this.state.addProduct);
 
-    // Stores a given value, 5 by default.
-    await contract.methods.set(42).send({ from: accounts[0] });
+    await this.productManagerContract.methods
+      .create(this.state.addProduct.productId, Number(this.state.addProduct.productPrice))
+      .send({from: this.accounts[0]});
 
-    // Get the value from the contract to prove it worked.
-    const contractValue = await contract.methods.get().call();
+    const products = await this.productManagerContract.products.call();
+    const index = await this.productManagerContract.index.call();
 
-    // Update state with the result.
-    this.setState({ storageValue: contractValue });
-  };
+    this.setState({ products: products, index: index });
+  }
+
+  addFormChangeHanlder = (event) => {
+    const addProduct = this.state.addProduct;
+    addProduct[event.target.name] = event.target.value
+
+    this.setState(prevState => (
+      {...prevState,
+         addProduct: addProduct
+      }
+    ));
+  }
 
   render() {
-    if (!this.state.web3) {
-      return <div>Loading Web3, accounts, and contract...</div>;
+    if (!this.state.loaded) {
+      return <div>Unable to connect to the blockchanin.</div>;
     }
     return (
       <div className="App">
-        <h1>Good to Go!</h1>
-        <p>Your Truffle Box is installed and ready.</p>
-        <h2>Smart Contract Example</h2>
-        <p>
-          If your contracts compiled and migrated successfully, below will show
-          a stored value of 5 (by default).
-        </p>
-        <p>
-          Try changing the value stored on <strong>line 42</strong> of App.js.
-        </p>
-        <div>The stored value is: {this.state.storageValue}</div>
+        <h1>Supply Chain Manager</h1>
+        <h2>Add product</h2>
+        <table>
+          Id: <input type="text" name="productId" onChange={this.addFormChangeHanlder}></input><br/>
+          Price: <input type="number" name="productPrice" onChange={this.addFormChangeHanlder}></input><br/>
+          <button onClick={() => this.handleCreate()}>Create</button>
+        </table>
+        <p>Index: {this.state.index}</p>
+        <p>Products: {this.state.products}</p>
       </div>
     );
   }
