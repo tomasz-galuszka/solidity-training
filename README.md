@@ -26,4 +26,5 @@
 - https://github.com/ConsenSys/Tokens
 - https://fravoll.github.io/solidity-patterns/
 - https://ethereum.github.io/yellowpaper/paper.pdf
-  https://github.com/OpenZeppelin/openzeppelin-contracts
+- https://github.com/OpenZeppelin/openzeppelin-contracts
+- https://geth.ethereum.org/
