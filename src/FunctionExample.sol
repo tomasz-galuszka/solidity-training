@@ -64,13 +64,15 @@ contract FunctionExample {
     _to.transfer(_amount);
   }
 
+  // fallback when no function matches it is called
   // external - fallback function
-  // payable - receive money
+  // payable - receive money (optionally)
   fallback () external payable {
     require(msg.data.length == 0, "unintentional call to fallback function, check the function name u specified."); // prevent call by using wrong function name
     receiveMoney();
   }
 
+  // receive - function to receive ether by calling contract for empty call data and any value
   receive() external payable {
 
   }

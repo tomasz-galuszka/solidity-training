@@ -57,8 +57,10 @@ strings are expensive in terms of gas, try avoid
 - pure function -> not reading or modifying state (old: constant)
 - fallback
   - can only be external
-  - send ether without interacting with any function
-  - called by default when no function name provided/or not found
+  - when payable it can receive ether
+  - called by default when no function name provided/or not found, for example calldata 0x10
+- receive
+  - for empty call data and any value must be external and payable - smart contract receive money in msg.value
 - visibility:
   - public
     - outside from smart contract
