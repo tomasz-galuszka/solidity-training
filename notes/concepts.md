@@ -50,3 +50,6 @@ CA -> contract account (smart contract address)
 # Blockchain node
 - speaks with other notes using Ethereum protocol
 - exposes 3 apis(rest/rpc, ipc/inter process communication, websocket)
+
+# Account
+-  nonce: number incremented everytime you send a transaction 0,1,2... etc. Etherium net knows how many transactions was send from a particular account and when next transactions is send, the nonce has to be incremented. Nonce has to be sequientialy incremented (cannot use nonce 4 when already has 1,2, must  be 3)

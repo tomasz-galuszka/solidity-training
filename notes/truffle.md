@@ -12,7 +12,7 @@ truffle unbox <BOX-NAME>
 Creates test blockchain as a deamon process with some test accounts
 ```
 cd my-project/
-truffle console
+truffle development // uses 1st account to deploy smart contracts
 ```
 
 #### Migrate
@@ -25,6 +25,12 @@ truffle migrate  // from truffle console
 cd my-project/client/
 npm run build
 npm run start
+```
+
+#### Some commands
+```
+  // transfer eth from truffle console
+  web3.eth.sendTransaction({to: "0x0581FC4143666A3D4E3A9038a17cE5C35fae415E", value: 500, from: accounts[1], gas: 300000});
 ```
 
 

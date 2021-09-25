@@ -11,7 +11,7 @@ class App extends Component {
   accounts = [];
   productManagerContract = null;
   itemContract = null;
-  state = { loaded: false, products: null, index: null, addProduct: {}};
+  state = { loaded: false, products: [], index: null, addProduct: {}};
 
   componentDidMount = async () => {
     try {
@@ -32,23 +32,42 @@ class App extends Component {
 
       this.setState({loaded: true});
 
+      const index = await this.productManagerContract.methods
+        .index()
+        .call();
+      this.setState({index: index });
+
+      this.subscribeSupplyChainStep();
+
     } catch (error) {
-      // alert(`Failed to load web3, accounts, or contract. Check console for details.`);
       console.error(error);
     }
-  };
+  }
 
   handleCreate = async () => {
     console.log('Adding new product', this.state.addProduct);
 
-    await this.productManagerContract.methods
+    const result = await this.productManagerContract.methods
       .create(this.state.addProduct.productId, Number(this.state.addProduct.productPrice))
       .send({from: this.accounts[0]});
 
-    const products = await this.productManagerContract.products.call();
-    const index = await this.productManagerContract.index.call();
+    const addedProductIndex = result.events.SupplyChainStep.returnValues._index;
+    const addedProductAddress = result.events.SupplyChainStep.returnValues._address;
+    const addedProductStatus = result.events.SupplyChainStep.returnValues._status;
 
-    this.setState({ products: products, index: index });
+    this.setState(prevState => (
+      {
+        ...prevState,
+        index: Number(addedProductIndex) + 1,
+        products: [...this.state.products, {
+          index: addedProductIndex,
+          address: addedProductAddress,
+          status: addedProductStatus,
+        }]
+      }
+    ));
+
+    console.log(this.state.products);
   }
 
   addFormChangeHanlder = (event) => {
@@ -62,6 +81,33 @@ class App extends Component {
     ));
   }
 
+  subscribeSupplyChainStep = () => {
+    const self = this;
+    this.productManagerContract.events
+      .SupplyChainStep()
+      .on("data", async (payload) => {
+        const itemIndex = Number(payload.returnValues._index);
+        const itemStatus = Number(payload.returnValues._status);
+        
+      if (itemStatus == 0) {
+        console.log('Create result', payload);
+
+      } else if (itemStatus == 1) {
+        console.log(`Item with index ${itemIndex} has been purchased and changed status to ${itemStatus}`)
+        console.log('Starting delivery process...')
+
+        const result = await self.productManagerContract.methods
+          .deliver(itemIndex)
+          .send({from: self.accounts[0]})
+
+        console.log('Delivery response', result);
+      } else if (itemStatus == 2) {
+        console.log('Delivery result', payload);
+      }
+
+      })
+  }
+
   render() {
     if (!this.state.loaded) {
       return <div>Unable to connect to the blockchanin.</div>;
@@ -70,13 +116,10 @@ class App extends Component {
       <div className="App">
         <h1>Supply Chain Manager</h1>
         <h2>Add product</h2>
-        <table>
-          Id: <input type="text" name="productId" onChange={this.addFormChangeHanlder}></input><br/>
-          Price: <input type="number" name="productPrice" onChange={this.addFormChangeHanlder}></input><br/>
-          <button onClick={() => this.handleCreate()}>Create</button>
-        </table>
-        <p>Index: {this.state.index}</p>
-        <p>Products: {this.state.products}</p>
+        Id: <input type="text" name="productId" onChange={this.addFormChangeHanlder}></input>
+        Price in wei: <input type="number" name="productPrice" onChange={this.addFormChangeHanlder}></input>
+        <button onClick={() => this.handleCreate()}>Create</button>
+        <p>Total products: {this.state.index}</p>
       </div>
     );
   }
