@@ -1,0 +1,32 @@
+=============== Oct 2, 2021 (CEST) ===============
+08:14:28.381532 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+08:14:28.429207 db@open opening
+08:14:28.432334 version@stat F·[] S·0B[] Sc·[]
+08:14:28.441014 db@janitor F·2 G·0
+08:14:28.441081 db@open done T·11.829212ms
+08:16:05.292214 db@close closing
+08:16:05.292562 db@close done T·349.059µs
+=============== Oct 2, 2021 (CEST) ===============
+08:16:13.047551 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+08:16:13.047831 version@stat F·[] S·0B[] Sc·[]
+08:16:13.047860 db@open opening
+08:16:13.047937 journal@recovery F·1
+08:16:13.049875 journal@recovery recovering @1
+08:16:13.060847 memdb@flush created L0@2 N·209 S·6KiB "loc..seq,v2":"version,v1"
+08:16:13.063215 version@stat F·[1] S·6KiB[6KiB] Sc·[0.25]
+08:16:13.112717 db@janitor F·3 G·0
+08:16:13.112761 db@open done T·64.888871ms
+08:17:40.796344 db@close closing
+08:17:40.796415 db@close done T·70.479µs
+=============== Oct 2, 2021 (CEST) ===============
+08:18:05.328215 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+08:18:05.328486 version@stat F·[1] S·6KiB[6KiB] Sc·[0.25]
+08:18:05.328519 db@open opening
+08:18:05.328616 journal@recovery F·1
+08:18:05.330718 journal@recovery recovering @3
+08:18:05.342388 memdb@flush created L0@5 N·1 S·159B "loc..seq,v211":"loc..seq,v211"
+08:18:05.344424 version@stat F·[2] S·6KiB[6KiB] Sc·[0.50]
+08:18:05.395778 db@janitor F·4 G·0
+08:18:05.395808 db@open done T·67.27604ms
+08:18:07.113242 db@close closing
+08:18:07.113313 db@close done T·71.537µs

@@ -53,29 +53,9 @@ CA -> contract account (smart contract address)
 
 ### Account
 - nonce: number incremented everytime you send a transaction 0,1,2... etc. Etherium net knows how many transactions was send from a particular account and when next transactions is send, the nonce has to be incremented. Nonce has to be sequientialy incremented (cannot use nonce 4 when already has 1,2, must  be 3)
-
-### Geth - run ethereum node and connect into the network
-Written in GO lang
-Need to be updated manually from time to time
-Example:
-```
-./geth --syncmode <MODE>
-./geth --syncmode light // etc.
-```
-Client connection  via IPC:
-```
-./geth attach ipc:/Users/tomasz.g/Library/Ethereum/geth.ipc
-```
-Data path:
-```
-/Users/<user>.g/Library/Ethereum/geth 
-/Users/<user>.g/Library/Ethereum/keystore --> keeps account private keys needs to be backuped 
-```
-- Three ways of sync:
-  - FULL -> full sync with blockchain from beginning and process all transactions from the begining
-  - FAST -> only block headers and bodies, last 1024 transactions, download all blocks, takes few hours 
-  - LIGHT -> only headers, takes the latests snapshots, less secure but very fast, few hundred  MB
-Output:
-  - ChainID: 1,2,3,4 - reserved for main/test networks
-  - IPC endpoint opened                      url=/Users/tomasz.g/Library/Ethereum/geth.ipc (file based IPC protocol communication with the node)
   
+### Networks
+- mainnet --public: costs real money
+- testnet --public: free
+- consortium blockchain --public nowtork created by someone but restricted to specific accounts, rules etc
+- private blockchain -- private network network create by someone by with restricted access
