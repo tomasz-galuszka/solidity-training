@@ -17,6 +17,8 @@ CA -> contract account (smart contract address)
   - store data off-chain and store only a proof (hash) -> Notary
   - store data in another blockchain such as IPFS
   - store data in Event logs if not necessary 
+- encrypted on a shared ledger
+- autonomy, trust, backups (multiple nodes), safety, speed, savings(no middle man), accuracy§
 
 ### Public ledger
 - all information is public (ether is stored in the blockchain)
@@ -58,4 +60,4 @@ CA -> contract account (smart contract address)
 - mainnet --public: costs real money
 - testnet --public: free
 - consortium blockchain --public nowtork created by someone but restricted to specific accounts, rules etc
-- private blockchain -- private network network create by someone by with restricted access
+- private blockchain -- private network network create by someone by with restricted access, ex. multichain
