@@ -1,6 +1,13 @@
 ### Geth - run ethereum node and connect into the network
 Written in GO lang
 Need to be updated manually from time to time
+File based database inside datadir
+````
+  keystore - private keys/accounts
+  geth/chaindata -> ledger store/blocks store
+  geth/lightchaindata -> same as above but when geth started in light mode
+  all connected nodes will have exactly the same data
+````
 Example:
 ```
 ./geth --syncmode <MODE>
@@ -8,13 +15,23 @@ Example:
 ```
 Client connection  via IPC:
 ```
-./geth attach ipc:/Users/tomasz.g/Library/Ethereum/geth.ipc
-// execute js code, for example:
+./geth attach ipc://$(pwd)/data/geth.ipc
 
+// list accounts
+> personal.listAccounts
+
+// create account
 > personal.newAccount();
 Passphrase:
 Repeat passphrase:
 "0xf414ca37298aa385ff57112b7ef348356479003a"
+
+// start miner
+miner.setEtherBase(personal.listAccounts[0])
+miner.start(1) // 1 thread
+
+// check miner account balance in ETH
+web3.eth.getBalance(personal.listAccounts[0]) / 1000000000000000000
 ```
 Data path:
 ```
