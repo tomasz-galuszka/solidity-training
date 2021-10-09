@@ -1,3 +1,4 @@
+require('dotenv').config({path: '../.env'})
 const Token = artifacts.require('./MachaToken')
 const BN = web3.utils.BN;
 
@@ -10,17 +11,17 @@ chai.use(chaiAsPromised);
 
 const expect = chai.expect;
 
-
 contract('MachaTokenTest', async(accounts) => {
 
-  const  [deployerAccount, receipientAccount, anotherAccount] = accounts;
+  const  [deployerAccount, receipientAccount] = accounts;
   let instance;
   let totalSupply;
 
   beforeEach(async () => {
-    instance = await Token.deployed()
+    instance = await Token.new(process.env.INITIAL_TOKENS)
     totalSupply = await instance.totalSupply()
   })
+
 
   it('should all tokens be assigned to deployer account', async() => {
     const deployerBalance = instance.balanceOf(deployerAccount)
