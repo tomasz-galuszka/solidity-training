@@ -10,7 +10,10 @@ import "./App.css";
 
 class App extends Component {
 
-  state = { loaded: false };
+  state = { loaded: false, inputState: {
+    kycAddress: '0x123....'
+  }
+};
 
   componentDidMount = async () => {
     try {
@@ -32,18 +35,33 @@ class App extends Component {
         KYCContract.networks[this.networkId] && KYCContract.networks[this.networkId].address
       );
 
-      // Set web3, accounts, and contract to the state, and then proceed with an
-      // example of interacting with the contract's methods.
       this.setState({loaded: true});
 
     } catch (error) {
-      // Catch any errors for any of the above operations.
-      alert(
-        `Failed to load web3, accounts, or contract. Check console for details.`,
-      );
+      alert(`Failed to load web3, accounts, or contract. Check console for details.`,);
       console.error(error);
     }
   };
+
+  handleInputChange = (event) => {
+    const inputState = this.state.inputState;
+    inputState[event.target.name] = event.target.value
+
+    this.setState(prevState => (
+      {...prevState,
+        inputState: inputState
+      }
+    ));
+  }
+
+  handleAddKYC = async () => {
+    await this.instanceKYCContract.methods
+      .setCompleted(this.state.inputState.kycAddress)
+      .send({
+        from: this.accounts[0]
+      });
+    console.log(`KYC for ${this.state.inputState.kycAddress} is completed`)
+  }
 
   render() {
     if (!this.state.loaded) {
@@ -51,16 +69,11 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <h1>Good to Go!</h1>
-        <p>Your Truffle Box is installed and ready.</p>
-        <h2>Smart Contract Example</h2>
-        <p>
-          If your contracts compiled and migrated successfully, below will show
-          a stored value of 5 (by default).
-        </p>
-        <p>
-          Try changing the value stored on <strong>line 42</strong> of App.js.
-        </p>
+        <h1>Macha open sale !</h1>
+        <p>Get your macha today</p>
+        <h2>KYC whitelisting</h2>
+        Address to allow: <input type="text" name="kycAddress" onChange={this.handleInputChange} value={this.state.inputState.kycAddress}></input>
+        <button type="button" onClick={this.handleAddKYC}>Add to whitelist</button>
       </div>
     );
   }
