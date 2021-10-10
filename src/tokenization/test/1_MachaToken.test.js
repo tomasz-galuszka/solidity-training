@@ -35,17 +35,22 @@ contract('MachaTokenTest', async(accounts) => {
     return expect(receipientBalance).to.eventually.be.a.bignumber.equal(new BN(givenAmountToTransfer))
   })
 
-  // it ('should be impossible to transfer more tokens than available', async() => {
-  //   const givenAmountToTransfer = Number(totalSupply.toString()) + 1
+  it ('should be impossible to transfer more tokens than available', async() => {
+    const givenAmountToTransfer = Number(totalSupply.toString()) + 1
 
-  //   expect(instance.transfer(receipientAccount, givenAmountToTransfer)).to.eventually.be.rejected;
+    try {
+      // expect(instance.transfer(receipientAccount, givenAmountToTransfer)).to.eventually.be.rejected;
+      await instance.transfer(receipientAccount, givenAmountToTransfer)
+    } catch (error) {
+      console.log('Promise rejected', error.reason);
+    }
 
-  //   const deployerBalance = instance.balanceOf(deployerAccount)
-  //   const receipientBalance = instance.balanceOf(receipientAccount)
+    const deployerBalance = instance.balanceOf(deployerAccount)
+    const receipientBalance = instance.balanceOf(receipientAccount)
 
-  //   expect(deployerBalance).to.eventually.be.a.bignumber.equal(totalSupply)
-  //   return expect(receipientBalance).to.eventually.be.a.bignumber.equal(new BN(0))
-  // })
+    expect(deployerBalance).to.eventually.be.a.bignumber.equal(totalSupply)
+    return expect(receipientBalance).to.eventually.be.a.bignumber.equal(new BN(0))
+  })
 
 
 })
