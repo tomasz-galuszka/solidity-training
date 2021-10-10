@@ -33,6 +33,11 @@ npm run start
   web3.eth.sendTransaction({to: "0x0581FC4143666A3D4E3A9038a17cE5C35fae415E", value: 500, from: accounts[1], gas: 300000});
 ```
 
+#### Send some money from truffle console
+````
+web3.eth.sendTransaction({from: accounts[0], to: '0xef1189A72FBD6226908EF40B3C9Da31a51366f38', value: web3.utils.toWei('1', 'ether') });
+````
+
 
 #### Links
 
