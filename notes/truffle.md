@@ -19,6 +19,7 @@ truffle development // uses 1st account to deploy smart contracts
 Deploys `./contracts` using `./migrations` definitions into the test blockchain
 ```
 truffle migrate  // from truffle console
+truffle migrate --network ganache_local
 ```
 #### Run Client
 ```

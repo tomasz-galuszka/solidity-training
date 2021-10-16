@@ -10,7 +10,7 @@ import "./App.css";
 
 class App extends Component {
 
-  state = { loaded: false, inputState: {
+  state = { loaded: false, tokenSaleAddress: '0x123..',userTokenBalance: 0, inputState: {
     kycAddress: '0x123....'
   }
 };
@@ -35,13 +35,31 @@ class App extends Component {
         KYCContract.networks[this.networkId] && KYCContract.networks[this.networkId].address
       );
 
-      this.setState({loaded: true});
+      this.listenTokenTransferEvent()
+      this.setState({
+        loaded: true,
+        tokenSaleAddress: MachaTokenSaleContract.networks[this.networkId].address,
+      }, this.getUserTokenBalance);
 
     } catch (error) {
       alert(`Failed to load web3, accounts, or contract. Check console for details.`,);
       console.error(error);
     }
   };
+
+  getUserTokenBalance = async () => {
+    const result = await this.instanceMachaTokenContract.methods
+      .balanceOf(this.accounts[0])
+      .call(); // read is free
+
+    this.setState({userTokenBalance: result});
+  }
+
+  listenTokenTransferEvent = () => {
+    this.instanceMachaTokenContract.events
+      .Transfer({to: this.accounts[0]})
+      .on('data', this.getUserTokenBalance)
+  }
 
   handleInputChange = (event) => {
     const inputState = this.state.inputState;
@@ -52,6 +70,15 @@ class App extends Component {
         inputState: inputState
       }
     ));
+  }
+
+  handleBuyTokens = async() => {
+    await this.instanceMachaTokenSaleContract.methods
+      .buyTokens(this.accounts[0])
+      .send({
+        from: this.accounts[0],
+        value: this.web3.utils.toWei("1", "wei")
+      })
   }
 
   handleAddKYC = async () => {
@@ -74,6 +101,10 @@ class App extends Component {
         <h2>KYC whitelisting</h2>
         Address to allow: <input type="text" name="kycAddress" onChange={this.handleInputChange} value={this.state.inputState.kycAddress}></input>
         <button type="button" onClick={this.handleAddKYC}>Add to whitelist</button>
+        <h2>Bouy tokents</h2>
+        <p>Token sale address: {this.state.tokenSaleAddress}</p>
+        <p>You have : {this.state.userTokenBalance} JMCH</p>
+        <button type="button" onClick={this.handleBuyTokens}>Buy</button>
       </div>
     );
   }
