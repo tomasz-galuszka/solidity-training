@@ -10,9 +10,16 @@ import "./App.css";
 
 class App extends Component {
 
-  state = { loaded: false, tokenSaleAddress: '0x123..',userTokenBalance: 0, inputState: {
-    kycAddress: '0x123....'
-  }
+  state = { loaded: false,
+    userAddress: 0,
+    userTokenBalance: 0,
+    userMoneyBalance: 0,
+    tokenSaleAddress: '',
+    tokenSaleTokenBalance: 0,
+    tokenSaleMoneyBalance: 0,
+    inputState: {
+      kycAddress: '0x123....'
+    }
 };
 
   componentDidMount = async () => {
@@ -39,7 +46,13 @@ class App extends Component {
       this.setState({
         loaded: true,
         tokenSaleAddress: MachaTokenSaleContract.networks[this.networkId].address,
-      }, this.getUserTokenBalance);
+        userAddress: this.accounts[0],
+      }, async() => {
+          await this.getUserTokenBalance()
+          await this.getUserMoneyBalance()
+          await this.getTokenSaleTokenBalance()
+          await this.getTokenSaleMoneyBalance()
+      });
 
     } catch (error) {
       alert(`Failed to load web3, accounts, or contract. Check console for details.`,);
@@ -55,10 +68,37 @@ class App extends Component {
     this.setState({userTokenBalance: result});
   }
 
+  getUserMoneyBalance = async () => {
+    let result = await this.web3.eth.getBalance(this.accounts[0]);
+
+    this.setState({userMoneyBalance: this.web3.utils.fromWei(result, "ether")});
+  }
+
+  getTokenSaleTokenBalance = async () => {
+    const result = await this.instanceMachaTokenContract.methods
+      .balanceOf(MachaTokenSaleContract.networks[this.networkId].address)
+      .call(); // read is free
+
+    this.setState({tokenSaleTokenBalance: result});
+  }
+
+  getTokenSaleMoneyBalance = async () => {
+    const walletAddress = await this.instanceMachaTokenSaleContract.methods
+      .wallet()
+      .call(); // read is free
+    let result = await this.web3.eth.getBalance(walletAddress);
+    this.setState({tokenSaleMoneyBalance: this.web3.utils.fromWei(result, "ether")});
+  }
+
   listenTokenTransferEvent = () => {
     this.instanceMachaTokenContract.events
       .Transfer({to: this.accounts[0]})
-      .on('data', this.getUserTokenBalance)
+      .on('data', async() => {
+        await this.getUserTokenBalance()
+        await this.getUserMoneyBalance()
+        await this.getTokenSaleTokenBalance()
+        await this.getTokenSaleMoneyBalance()
+      })
   }
 
   handleInputChange = (event) => {
@@ -103,7 +143,11 @@ class App extends Component {
         <button type="button" onClick={this.handleAddKYC}>Add to whitelist</button>
         <h2>Bouy tokents</h2>
         <p>Token sale address: {this.state.tokenSaleAddress}</p>
-        <p>You have : {this.state.userTokenBalance} JMCH</p>
+        <p>Your address: {this.state.userAddress}</p>
+        <p>Token sale balance [ETH]: {this.state.tokenSaleMoneyBalance}</p>
+        <p>Your balance [ETH]: {this.state.userMoneyBalance}</p>
+        <p>Token sale balance [JMCH]: {this.state.tokenSaleTokenBalance}</p>
+        <p>Your balance [JMCH]: {this.state.userTokenBalance}</p>
         <button type="button" onClick={this.handleBuyTokens}>Buy</button>
       </div>
     );

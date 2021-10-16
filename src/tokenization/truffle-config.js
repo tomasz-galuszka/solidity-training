@@ -28,6 +28,35 @@ module.exports = {
         }),
       network_id: '5777',
     },
+    goerli_infura: {
+      // must be a thunk, otherwise truffle commands may hang in CI
+      provider: () =>
+        new HDWalletProvider({
+          mnemonic: {
+            phrase: process.env.MNEMONIC
+          },
+          shareNonce: true,
+          numberOfAddresses: 5,
+          addressIndex: AccountIndex,
+          providerOrUrl: "https://goerli.infura.io/v3/d0b8f5d001da45bdaeb204f23556526c",
+        }),
+      network_id: '5',
+    },
+    ropsten_infura: {
+      // must be a thunk, otherwise truffle commands may hang in CI
+      provider: () =>
+        new HDWalletProvider({
+          mnemonic: {
+            phrase: process.env.MNEMONIC
+          },
+          shareNonce: true,
+          numberOfAddresses: 5,
+          addressIndex: AccountIndex,
+          providerOrUrl: "https://ropsten.infura.io/v3/d0b8f5d001da45bdaeb204f23556526c",
+        }),
+      network_id: '3',
+    },
+
   },
   compilers: {
     solc: {
