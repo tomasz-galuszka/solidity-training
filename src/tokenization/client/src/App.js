@@ -136,19 +136,20 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <h1>Macha open sale !</h1>
-        <p>Get your macha today</p>
+        <h1>Matcha open sale !</h1>
+        <p>Get your matcha today</p>
         <h2>KYC whitelisting</h2>
         Address to allow: <input type="text" name="kycAddress" onChange={this.handleInputChange} value={this.state.inputState.kycAddress}></input>
         <button type="button" onClick={this.handleAddKYC}>Add to whitelist</button>
-        <h2>Bouy tokents</h2>
+        <h2>Buy tokens</h2>
         <p>Token sale address: {this.state.tokenSaleAddress}</p>
-        <p>Your address: {this.state.userAddress}</p>
         <p>Token sale balance [ETH]: {this.state.tokenSaleMoneyBalance}</p>
-        <p>Your balance [ETH]: {this.state.userMoneyBalance}</p>
         <p>Token sale balance [JMCH]: {this.state.tokenSaleTokenBalance}</p>
+        <button type="button" onClick={this.handleBuyTokens}>Buy single</button>
+        <h2>Account details</h2>
+        <p>Your address: {this.state.userAddress}</p>
+        <p>Your balance [ETH]: {this.state.userMoneyBalance}</p>
         <p>Your balance [JMCH]: {this.state.userTokenBalance}</p>
-        <button type="button" onClick={this.handleBuyTokens}>Buy</button>
       </div>
     );
   }
