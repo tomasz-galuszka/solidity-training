@@ -1,4 +1,3 @@
-import getWeb3 from "../getWeb3"
 import KYCContract from "../contracts/KYCContract.json"
 
 export class KYCSservice {
