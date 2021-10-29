@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.9;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "./openzeppelin/ERC20Mintable.sol";
 
-contract MatchaToken is ERC20 {
+contract MatchaToken is ERC20Mintable {
 
-  constructor(uint256 initialSupply) ERC20('JapanMatcha', 'JMT') {
+  constructor(uint256 initialSupply) ERC20Mintable('JapanMatcha', 'JMT') {
     _mint(msg.sender, initialSupply);
   }
 

@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.9;
 
-import "./openzeppelin/Crowdsale.sol";
+import "./openzeppelin/MintedCrowdsale.sol";
 import "./KYCContract.sol";
 
-contract MatchaTokenSale is Crowdsale {
+contract MatchaTokenSale is MintedCrowdsale, MinterRole {
 
   KYCContract kycContract;
 
@@ -13,7 +13,7 @@ contract MatchaTokenSale is Crowdsale {
     address payable wallet, // address for forwarding payable funds
     IERC20 token, // address of the token
     KYCContract _kycContract // the kyc check address
-  ) Crowdsale(rate, wallet, token) {
+  ) MintedCrowdsale(rate, wallet, token) {
     kycContract = _kycContract;
   }
 
