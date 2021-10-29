@@ -1,8 +1,11 @@
 
-require('dotenv').config({path: '.env'});
+require('dotenv').config({
+  path: '.env'
+});
 const path = require("path");
 const HDWalletProvider = require("@truffle/hdwallet-provider");
 const AccountIndex = 0;
+
 
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
@@ -22,7 +25,6 @@ module.exports = {
             phrase: process.env.MNEMONIC
           },
           shareNonce: true,
-          numberOfAddresses: 5,
           addressIndex: AccountIndex,
           providerOrUrl: "http://localhost:7545",
         }),

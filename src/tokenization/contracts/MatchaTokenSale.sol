@@ -1,18 +1,18 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.9;
 
-import "./Crowdsale.sol";
+import "./openzeppelin/Crowdsale.sol";
 import "./KYCContract.sol";
 
-contract MachaTokenSale is Crowdsale {
+contract MatchaTokenSale is Crowdsale {
 
   KYCContract kycContract;
 
   constructor(
-    uint256 rate,
-    address payable wallet,
-    IERC20 token,
-    KYCContract _kycContract
+    uint256 rate, // number of token buyer gets per wei
+    address payable wallet, // address for forwarding payable funds
+    IERC20 token, // address of the token
+    KYCContract _kycContract // the kyc check address
   ) Crowdsale(rate, wallet, token) {
     kycContract = _kycContract;
   }

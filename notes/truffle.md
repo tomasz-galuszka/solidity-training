@@ -12,6 +12,7 @@ truffle unbox <BOX-NAME>
 Creates test blockchain as a deamon process with some test accounts
 ```
 cd my-project/
+truffle console --network ganache_local
 truffle development // uses 1st account to deploy smart contracts
 ```
 

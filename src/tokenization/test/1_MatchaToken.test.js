@@ -1,11 +1,11 @@
-const Token = artifacts.require('./MachaToken')
+const Token = artifacts.require('./MatchaToken')
 require('dotenv').config({path: '../.env'})
 
 const chai = require("./setup.chai.js")
 const BN = web3.utils.BN;
 const expect = chai.expect;
 
-contract('MachaTokenTest', async(accounts) => {
+contract('MatchaTokenTest', async(accounts) => {
 
   const  [deployerAccount, receipientAccount] = accounts;
   let instance;

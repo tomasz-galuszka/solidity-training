@@ -1,5 +1,5 @@
-const Token = artifacts.require('./MachaToken')
-const TokenSale = artifacts.require('./MachaTokenSale')
+const Token = artifacts.require('./MatchaToken')
+const TokenSale = artifacts.require('./MatchaTokenSale')
 const KYC = artifacts.require('./KYCContract')
 require('dotenv').config({path: '../.env'})
 
@@ -7,7 +7,7 @@ const chai = require("./setup.chai.js")
 const BN = web3.utils.BN;
 const expect = chai.expect;
 
-contract('MachaTokenSaleTest', async(accounts) => {
+contract('MatchaTokenSaleTest', async(accounts) => {
 
   const  [deployerAccount, receipientAccount] = accounts;
   let instance;
@@ -25,7 +25,6 @@ contract('MachaTokenSaleTest', async(accounts) => {
   })
 
   it('should all token be on the token sale smart contract by default', async() => {
-    const totalSupply = await instance.totalSupply()
     const tokenSaleBalance = await instance.balanceOf(instanceSale.address)
 
     return expect(tokenSaleBalance).to.be.a.bignumber.equal(new BN(process.env.INITIAL_TOKENS))
