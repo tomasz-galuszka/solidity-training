@@ -32,6 +32,17 @@
 - Balance3
 - monax
 
+### Deployment
+#### Smart contract
+```
+address: 0x222951bd59dd1c0fc9f35e53A27c425C1d25EF1f
+```
+#### Client website 
+```
+https://tomasz-galuszka.github.io/jmt/
+
+```
+
 ### Links
 - https://etherscan.io/
 - https://remix.ethereum.org/
@@ -43,3 +54,4 @@
 - https://geth.ethereum.org/
 - https://www.rsk.co/
 - https://coin.dance/
+- https://www.facebook.com/groups/1272583802887548/?ref=pages_group_cta

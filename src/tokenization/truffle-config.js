@@ -51,10 +51,10 @@ module.exports = {
           mnemonic: {
             phrase: process.env.MNEMONIC
           },
-          shareNonce: true,
-          numberOfAddresses: 5,
+          // shareNonce: true,
+          // numberOfAddresses: 5,
           addressIndex: AccountIndex,
-          providerOrUrl: "https://ropsten.infura.io/v3/d0b8f5d001da45bdaeb204f23556526c",
+          providerOrUrl: "https://ropsten.infura.io/v3/226d506a51f24fc4b7d19dbc10cf381a",
         }),
       network_id: '3',
     },
