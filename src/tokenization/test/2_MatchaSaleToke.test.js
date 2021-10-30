@@ -9,7 +9,7 @@ const expect = chai.expect;
 
 contract('MatchaTokenSaleTest', async(accounts) => {
 
-  const  [deployerAccount, receipientAccount] = accounts;
+  const [deployerAccount, receipientAccount] = accounts;
   let instance;
 
   beforeEach(async () => {
@@ -27,13 +27,14 @@ contract('MatchaTokenSaleTest', async(accounts) => {
   it('should all token be on the token sale smart contract by default', async() => {
     const tokenSaleBalance = await instance.balanceOf(instanceSale.address)
 
-    return expect(tokenSaleBalance).to.be.a.bignumber.equal(new BN(process.env.INITIAL_TOKENS))
+    return expect(tokenSaleBalance).to.be.a.bignumber.equal(new BN(0))
     
   })
 
   it('should be possible to buy tokens', async() => {
     const amountInWei = web3.utils.toWei('1', 'wei')
     await instanceKYC.setCompleted(receipientAccount)
+    console.log("kyc completed")
 
     const deployerWeiBalanceBefore = await web3.eth.getBalance(deployerAccount)
     const receipientWeiBalanceBefore = await web3.eth.getBalance(receipientAccount)
@@ -41,8 +42,18 @@ contract('MatchaTokenSaleTest', async(accounts) => {
 
     const receipeintTokenBalanceBefore = await instance.balanceOf(receipientAccount)
     const tokenSaleTokenBalanceBefore = await instance.balanceOf(instanceSale.address)
+
+    const totalSupplyBefore = await instance.totalSupply()
     
-    await instanceSale.sendTransaction({from: receipientAccount, value: amountInWei})
+    try {
+      const result = await instanceSale.sendTransaction({from: receipientAccount, value: amountInWei})
+      result.logs.forEach(log => {
+        console.log(log.event)
+        console.log(log.args)
+      })
+    } catch( error) {
+      console.log(error)
+    }
 
     const deployerWeiBalanceAfter = await web3.eth.getBalance(deployerAccount)
     const receipientWeiBalanceAfter = await web3.eth.getBalance(receipientAccount)
@@ -51,25 +62,32 @@ contract('MatchaTokenSaleTest', async(accounts) => {
     const receipientTokenBalanceAfter = await instance.balanceOf(receipientAccount)
     const tokenSaleTokenBalanceAfter = await instance.balanceOf(instanceSale.address)
 
-    console.log(`deployerWeiBalanceBefore: ${deployerWeiBalanceBefore}`)
-    console.log(`receipientWeiBalanceBefore: ${receipientWeiBalanceBefore}`)
-    console.log(`tokenSaleWeiBalanceBefore: ${tokenSaleWeiBalanceBefore}`)
+    const totalSupplyAfter = await instance.totalSupply()
 
-    console.log(`receipeintTokenBalanceBefore: ${receipeintTokenBalanceBefore}`)
-    console.log(`tokenSaleTokenBalanceBefore: ${tokenSaleTokenBalanceBefore}`)
+    console.log(`deployer_WeiBalanceBefore: ${deployerWeiBalanceBefore}`)
+    console.log(`deployer_WeiBalanceAfter: ${deployerWeiBalanceAfter}`)
+    console.log('------')
+    console.log(`receipeint_TokenBalanceBefore: ${receipeintTokenBalanceBefore}`)
+    console.log(`receipient_TokenBalanceAfter: ${receipientTokenBalanceAfter}`)
+    console.log(`receipient_WeiBalanceBefore: ${receipientWeiBalanceBefore}`)
+    console.log(`receipient_WeiBalanceAfter: ${receipientWeiBalanceAfter}`)
+    console.log('------')
+    console.log(`tokenSale_TokenBalanceBefore: ${tokenSaleTokenBalanceBefore}`)
+    console.log(`tokenSale_TokenBalanceAfter: ${tokenSaleTokenBalanceAfter}`)
+    console.log(`tokenSale_WeiBalanceBefore: ${tokenSaleWeiBalanceBefore}`)
+    console.log(`tokenSale_WeiBalanceAfter: ${tokenSaleWeiBalanceAfter}`)
+
+
+    expect(tokenSaleTokenBalanceBefore).to.be.a.bignumber.equal(new BN(0))
+    expect(tokenSaleTokenBalanceAfter).to.be.a.bignumber.equal(new BN(0))
+    expect(totalSupplyBefore).to.be.a.bignumber.equal(new BN(0))
     
-    console.log(`deployerWeiBalanceAfter: ${deployerWeiBalanceAfter}`)
-    console.log(`receipientWeiBalanceAfter: ${receipientWeiBalanceAfter}`)
-    console.log(`tokenSaleWeiBalanceAfter: ${tokenSaleWeiBalanceAfter}`)
-
-    console.log(`receipientTokenBalanceAfter: ${receipientTokenBalanceAfter}`)
-    console.log(`tokenSaleTokenBalanceAfter: ${tokenSaleTokenBalanceAfter}`)
-
-
-    expect(tokenSaleTokenBalanceAfter).to.be.a.bignumber.equal(new BN(process.env.INITIAL_TOKENS).sub(new BN(1)))
+    expect(receipeintTokenBalanceBefore).to.be.a.bignumber.equal(new BN(0))
     expect(receipientTokenBalanceAfter).to.be.a.bignumber.equal(new BN(1))
-    return expect(deployerWeiBalanceAfter).to.be.a.bignumber.equal(new BN(deployerWeiBalanceBefore).add(new BN(1)))
-    // gas fee ??
+    expect(deployerWeiBalanceAfter).to.be.a.bignumber.equal(new BN(deployerWeiBalanceBefore).add(new BN(1)))
+    expect(totalSupplyAfter).to.be.a.bignumber.equal(new BN(1))
+    
+
     // return expect(receipientWeiBalanceAfter).to.be.a.bignumber.equal(new BN(receipientWeiBalanceBefore).sub(new BN(1)))
   })
 

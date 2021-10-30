@@ -19,10 +19,13 @@ contract MintedCrowdsale is Crowdsale {
      * @param tokenAmount Number of tokens to be minted
      */
     function _deliverTokens(address beneficiary, uint256 tokenAmount) internal override {
-        // Potentially dangerous assumption about the type of the token.
-        require(
-            ERC20Mintable(address(token())).mint(beneficiary, tokenAmount),
-                "MintedCrowdsale: minting failed"
-        );
+      // Potentially dangerous assumption about the type of the token.
+      IERC20 baseToken = token();
+      address baseTokenSmartContractAddress = address(baseToken);
+      ERC20Mintable mintableToken = ERC20Mintable(baseTokenSmartContractAddress);
+
+      // caller does not have the minter role
+      bool mintResult = mintableToken.mint(beneficiary, tokenAmount);
+      require(mintResult, "MintedCrowdsale: minting failed");
     }
 }

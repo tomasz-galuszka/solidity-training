@@ -20,7 +20,7 @@ export class TokenSaleDetailsComponent extends Component {
     this.setState(prevState => ({...prevState, address: this.service.getAddress()}),
       async() => {
         await this.getWalletAddress()
-        await this.getTokenBalance()
+        await this.getTokenTotalSupply()
         await this.getWalletBalance()
       }
     )
@@ -29,13 +29,13 @@ export class TokenSaleDetailsComponent extends Component {
 
   subscribeTransferEvents = (userAddress) => {
     this.serviceToken.subscribeTokenTransferEvent(userAddress, async() => {
-      await this.getTokenBalance()
+      await this.getTokenTotalSupply()
       await this.getWalletBalance()
     })
   }
 
-  getTokenBalance = async () => {
-    const balanceToken = await this.serviceToken.getTokenBalance(this.service.getAddress())
+  getTokenTotalSupply = async () => {
+    const balanceToken = await this.serviceToken.getTotalTokenSupply()
     this.setState({balanceToken})
   }
 

@@ -37,6 +37,17 @@ export class MatchaTokenService {
     return result // read is free
   }
 
+  getTotalTokenSupply = async() => {
+    console.log(`Getting getTotalTokenSupply ...`)
+
+    const result = await this.contractInstance.methods
+      .totalSupply()
+      .call()
+
+    console.log(`Getting getTotalTokenSupply = ${result}`)
+    return result
+  }
+
   subscribeTokenTransferEvent = (userAccount, onTransfer) => {
     this.contractInstance.events
       .Transfer({to: userAccount})

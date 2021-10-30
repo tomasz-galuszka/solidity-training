@@ -4,7 +4,7 @@ pragma solidity 0.8.9;
 import "./openzeppelin/MintedCrowdsale.sol";
 import "./KYCContract.sol";
 
-contract MatchaTokenSale is MintedCrowdsale, MinterRole {
+contract MatchaTokenSale is MintedCrowdsale {
 
   KYCContract kycContract;
 

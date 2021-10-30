@@ -12,7 +12,6 @@ import "./MinterRole.sol";
  */
 contract ERC20Mintable is ERC20, MinterRole {
 
-
     constructor(string memory name_, string memory symbol_) ERC20(name_, symbol_) {}
 
     /**

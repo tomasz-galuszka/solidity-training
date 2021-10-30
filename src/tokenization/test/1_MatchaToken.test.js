@@ -23,34 +23,34 @@ contract('MatchaTokenTest', async(accounts) => {
     return expect(deployerBalance).to.eventually.be.a.bignumber.equal(totalSupply)
   })
 
-  it ('should be possible to send tokens to receipient accounts', async() => {
-    const givenAmountToTransfer = 20
+  // it ('should be possible to send tokens to receipient accounts', async() => {
+  //   const givenAmountToTransfer = 20
 
-    await instance.transfer(receipientAccount, givenAmountToTransfer)
+  //   await instance.transfer(receipientAccount, givenAmountToTransfer)
 
-    const deployerBalance = instance.balanceOf(deployerAccount)
-    const receipientBalance = instance.balanceOf(receipientAccount)
+  //   const deployerBalance = instance.balanceOf(deployerAccount)
+  //   const receipientBalance = instance.balanceOf(receipientAccount)
 
-    expect(deployerBalance).to.eventually.be.a.bignumber.equal(totalSupply.sub(new BN(givenAmountToTransfer)))
-    return expect(receipientBalance).to.eventually.be.a.bignumber.equal(new BN(givenAmountToTransfer))
-  })
+  //   expect(deployerBalance).to.eventually.be.a.bignumber.equal(totalSupply.sub(new BN(givenAmountToTransfer)))
+  //   return expect(receipientBalance).to.eventually.be.a.bignumber.equal(new BN(givenAmountToTransfer))
+  // })
 
-  it ('should be impossible to transfer more tokens than available', async() => {
-    const givenAmountToTransfer = Number(totalSupply.toString()) + 1
+  // it ('should be impossible to transfer more tokens than available', async() => {
+  //   const givenAmountToTransfer = Number(totalSupply.toString()) + 1
 
-    try {
-      // expect(instance.transfer(receipientAccount, givenAmountToTransfer)).to.eventually.be.rejected;
-      await instance.transfer(receipientAccount, givenAmountToTransfer)
-    } catch (error) {
-      console.log('Promise rejected', error.reason);
-    }
+  //   try {
+  //     // expect(instance.transfer(receipientAccount, givenAmountToTransfer)).to.eventually.be.rejected;
+  //     await instance.transfer(receipientAccount, givenAmountToTransfer)
+  //   } catch (error) {
+  //     console.log('Promise rejected', error.reason);
+  //   }
 
-    const deployerBalance = instance.balanceOf(deployerAccount)
-    const receipientBalance = instance.balanceOf(receipientAccount)
+  //   const deployerBalance = instance.balanceOf(deployerAccount)
+  //   const receipientBalance = instance.balanceOf(receipientAccount)
 
-    expect(deployerBalance).to.eventually.be.a.bignumber.equal(totalSupply)
-    return expect(receipientBalance).to.eventually.be.a.bignumber.equal(new BN(0))
-  })
+  //   expect(deployerBalance).to.eventually.be.a.bignumber.equal(totalSupply)
+  //   return expect(receipientBalance).to.eventually.be.a.bignumber.equal(new BN(0))
+  // })
 
 
 })
