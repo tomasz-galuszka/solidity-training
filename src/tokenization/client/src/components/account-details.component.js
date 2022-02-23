@@ -41,10 +41,23 @@ export class AccountDetailsComponent extends Component {
   render() {
     return (
       <div className="account-details">
-        <h2>Account details</h2>
-        <p>Your address: {this.state.address}</p>
-        <p>Token balance [JMT]: {this.state.balanceToken}</p>
-        <p>Money balance [ETH]: {this.state.balanceMoney}</p>
+        <h2>Your account details</h2>
+        <table>
+          <tbody>
+          <tr>
+            <td className="title">Address</td>
+            <td>{this.state.address}</td>
+          </tr>
+          <tr>
+            <td className="title">Token balance [JMT]</td>
+            <td>{this.state.balanceToken}</td>
+          </tr>
+          <tr>
+            <td className="title">Money balance [ETH]</td>
+            <td>{this.state.balanceMoney}</td>
+          </tr>
+          </tbody>
+        </table>
       </div>
     )
   }

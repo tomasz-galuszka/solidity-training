@@ -13,6 +13,8 @@ export class TokenBuyComponent extends Component {
 
   handleBuyTokens = async() => {
     this.service.buyTokens(this.props.address)
+    console.log(this.props.parentClickHandler)
+    this.props.parentClickHandler();
   }
 
   render() {
